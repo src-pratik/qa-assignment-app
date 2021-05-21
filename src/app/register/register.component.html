@@ -1,0 +1,82 @@
+<div *ngIf="!submitted">
+    <h1>Register Information</h1>
+</div>
+<form #frm="ngForm" class="example-form">
+    <mat-form-field appearance="standard" class="example-full-width">
+        <mat-label>First Name</mat-label>
+        <input matInput [(ngModel)]="model.fname" name="fname" #fname="ngModel" minlength="2" required
+            [disabled]="submitted">
+    </mat-form-field>
+    <div *ngIf="fname.invalid && (fname.dirty || fname.touched)" class="alert">
+        <div *ngIf="fname.errors?.required">
+            First Name is required.
+        </div>
+        <div *ngIf="fname.errors?.minlength">
+            First Name must be at least 2 characters long.
+        </div>
+    </div>
+    <mat-form-field appearance="standard" class="example-full-width">
+        <mat-label>Last Name</mat-label>
+        <input matInput [(ngModel)]="model.lname" name="lname" [disabled]="submitted">
+    </mat-form-field>
+    <mat-form-field appearance="standard" class="example-full-width">
+        <mat-label>E-mail</mat-label>
+        <input type="email" matInput [(ngModel)]="model.email" name="email" #email="ngModel" email required
+            [disabled]="submitted">
+    </mat-form-field>
+    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert">
+        <div *ngIf="email.errors?.required">
+            E-mail is required.
+        </div>
+        <div *ngIf="email.invalid && !email.errors?.required">
+            E-mail is invalid.
+        </div>
+    </div>
+    <mat-form-field appearance="standard" class="example-full-width">
+        <mat-label>Nationality</mat-label>
+        <mat-select [(ngModel)]="model.nationality" name="nationality" #nationality="ngModel" required
+            [disabled]="submitted">
+            <mat-option>--</mat-option>
+            <mat-option *ngFor="let c of countries" [value]="c.code">
+                {{c.value}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <div *ngIf="nationality.invalid && (nationality.dirty || nationality.touched)" class="alert">
+        <div *ngIf="nationality.errors?.required">
+            Nationality is required.
+        </div>
+    </div>
+    <mat-form-field appearance="standard" class="example-full-width">
+        <mat-label>Date of birth</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="model.dateofbirth" #dateofbirth="ngModel" required
+            [disabled]="submitted" name="dateofbirth">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <div *ngIf="dateofbirth.invalid && (dateofbirth.dirty || dateofbirth.touched)" class="alert">
+        <div *ngIf="dateofbirth.errors?.required">
+            Date of birth is required.
+        </div>
+        <div *ngIf="dateofbirth.invalid && !dateofbirth.errors?.required">
+            Date of birth is invalid.
+        </div>
+    </div>
+    <section class="example-section">
+        <span class="example-list-section">
+            <label>Reach out by :</label>
+            <ul>
+                <li *ngFor="let subtask of communication">
+                    <mat-checkbox [(ngModel)]="subtask.value" [color]="subtask.color" name="subtask"
+                        [disabled]="submitted">
+                        {{subtask.name}}
+                    </mat-checkbox>
+                </li>
+            </ul>
+        </span>
+    </section>
+
+    <button mat-raised-button *ngIf="!submitted" color="primary" [disabled]="!frm.valid"
+        (click)="onSubmit(frm)">Submit</button>
+
+</form>

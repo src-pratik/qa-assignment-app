@@ -1,0 +1,10 @@
+<div class="center">
+    <div style="display: flex;flex-wrap: wrap;align-items: center;">
+        <mat-spinner diameter="50" strokeWidth="2"></mat-spinner>
+        <img *ngIf="imagepath" src="{{imagepath}}">
+        <div *ngIf="message" style="margin-left: 10px;">
+            {{message}}
+        </div>
+    </div>
+
+</div>
